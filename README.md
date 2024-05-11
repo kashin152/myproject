@@ -25,12 +25,15 @@ pip install -r requirements.txt
 ### Функция filter_by_state
 ```python
 def filter_by_state(data, state='EXECUTED'):
-    """
-    Функция принимает на вход список словарей и значение для ключа state (опциональный параметр со значением по умолчанию EXECUTED)
-    и возвращает новый список, содержащий только те словари, у которых ключ state содержит переданное в функцию значение.
-    """
-    filtered_data = [item for item in data if item.get('state') == state]
-    return filtered_data
+    new_input_list = []
+    for item in input_list:
+        if item.get("state") == state:
+            new_input_list.append(item)
+    return new_input_list
+
+def sort_by_state(input_list: list, order: str = "desc") -> list:
+    return sorted(input_list, key=lambda x: x["date"], reverse=True)
+
 ```
 
 ### Пример использования
@@ -41,10 +44,6 @@ data = [
     {'id': 3, 'state': 'EXECUTED'},
     {'id': 4, 'state': 'FAILED'}
 ]
-
-filtered_data = filter_by_state(data, 'PENDING')
-print(filtered_data)
-# Output: [{'id': 2, 'state': 'PENDING'}]
 ```
 
 ## Автор
