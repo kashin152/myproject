@@ -116,6 +116,44 @@ date = [
        ]
 ```
 
+## Модуль generators
+Модуль generators содержит генераторы для работы с массивами транзакций. Эти генераторы позволяют быстро и удобно находить нужную информацию о транзакциях и проводить анализ данных.
+
+### Функция filter_by_currency
+```python
+def filter_by_currency(banking_information: dict, currency_code: str) -> dict:
+    for banking in banking_information:
+        if banking["operationAmount"]["currency"]["code"] == currency_code:
+            yield banking
+```
+
+### Функция transaction_descriptions
+```python
+def transaction_descriptions(banking_information: dict) -> str:
+    for banking in banking_information:
+        yield banking["description"]
+```
+
+### Функция card_numbers_generator
+```python
+def card_numbers_generator(start: int, stop: int) -> str:
+    for num in range(start, stop + 1):
+        number = "0" * (16 - len(str(num))) + str(num)
+
+        string_to_return = ""
+        block_counter = 0
+
+        for digit in number:
+            block_counter += 1
+            if block_counter <= 4:
+                string_to_return += digit
+            else:
+                string_to_return += " " + digit
+                block_counter = 1
+
+        yield string_to_return
+```
+
 # Тестирование проекта
 Проект покрыт тестами на 100%. Результат был зафиксирован с помощью Code coverage.
 ```python
@@ -168,6 +206,7 @@ def account_number():
 def test_date_in_correct_format(date, expected):
     assert date_in_correct_format(date) == expected
 ```
+
 
 ## Автор
 Александра Кашина
