@@ -9,7 +9,7 @@ def test_log_file():
         return x * y
 
     result = function(5, 2)
-    with open(os.path.join(r'C:\Users\kashi\проекты\myproject\logs', 'mylog.txt'), 'rt') as file:
+    with open(os.path.join(r'logs', 'mylog.txt'), 'rt') as file:
          for line in file:
              log_str = line
 
@@ -40,7 +40,7 @@ def test_log_file_error():
     with pytest.raises(TypeError, match="division by zero"):
         function(5, 0)
 
-    with open(os.path.join(r'C:\Users\kashi\проекты\myproject\logs', 'mylog.txt'), 'rt') as file:
+    with open(os.path.join(r'logs', 'mylog.txt'), 'rt') as file:
         for line in file:
             log_str = line
 

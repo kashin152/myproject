@@ -10,7 +10,7 @@ def log(filename=None):
                 result = func(*args, **kwargs)
                 log_str = f'{func.__name__} ok'
                 if filename:
-                    with open(os.path.join(r'C:\Users\kashi\проекты\myproject\logs', filename), 'a') as file:
+                    with open(os.path.join(r'logs', filename), 'a') as file:
                         file.write(log_str + '\n')
                 else:
                     print(log_str)
@@ -19,7 +19,7 @@ def log(filename=None):
             except Exception as e:
                 log_str = f'{func.__name__} error: {e}. Inputs: {args}, {kwargs}'
                 if filename:
-                    with open(os.path.join(r'C:\Users\kashi\проекты\myproject\logs', filename), 'a') as file:
+                    with open(os.path.join(r'logs', filename), 'a') as file:
                         file.write(log_str + '\n')
                 else:
                     print(log_str)
