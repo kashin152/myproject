@@ -153,6 +153,19 @@ def card_numbers_generator(start: int, stop: int) -> str:
 
         yield string_to_return
 ```
+## Модуль decorators
+Модуль decorators содержит декоратор, с помощью которого осуществляется логирование вызова функции и ее результата. Данные кешируются в дерикторию logs в файл mylog.txt.
+### Пример использования
+```python
+function ok
+function error: division by zero. Inputs: (5, 0), {}
+function ok
+function error: division by zero. Inputs: (5, 0), {}
+```
+
+
+
+
 
 # Тестирование проекта
 Проект покрыт тестами на 100%. Результат был зафиксирован с помощью Code coverage.
