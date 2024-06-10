@@ -2,7 +2,9 @@ import logging
 import os.path
 
 logger = logging.getLogger('masks')
-file_handler = logging.FileHandler(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'masks.log'), mode='w')
+file_handler = logging.FileHandler(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'masks.log'), mode='w'
+)
 file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -13,7 +15,7 @@ def mask_card_account_number(card_account_number: list) -> str:
     """Функция, которая принимает номер карты и номер счета выводит маскированный номер карты"""
     mask_number_account = ""
 
-    logger.info(f"Выполняем перебор номера и счета из списка")
+    logger.info("Выполняем перебор номера и счета из списка")
     for number in card_account_number:
 
         if len(number) == 16:

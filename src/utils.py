@@ -6,7 +6,9 @@ from typing import List
 from src.external_api import currency_conversion
 
 logger = logging.getLogger('utils')
-file_handler = logging.FileHandler(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'utils.log'), mode='w')
+file_handler = logging.FileHandler(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'utils.log'), mode='w'
+)
 file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -54,7 +56,7 @@ def transaction_amount(txn: dict) -> float:
         elif currency != "RUB":
             logger.info(f"Вывод суммы транзакции, если код валюты {currency}")
             return currency_conversion(currency, txn["operationAmount"]["amount"])
-    logger.info(f"Нет ключа 'operationAmount' в транзакции")
+    logger.info("Нет ключа 'operationAmount' в транзакции")
     return 0.0
 
 
