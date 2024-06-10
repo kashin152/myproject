@@ -1,11 +1,12 @@
 import os
+from typing import Callable, Optional, Any
 
 
-def log(filename=None):
+def log(filename: Optional[str] = None) -> Callable[[Callable], Callable]:
     """Декоратор, который логирует вызов функции и ее результат в файл, в случае указания пути,
     или в консоль, в случае отсутствия пути."""
-    def decorator(func):
-        def wrapper(*args, **kwargs):
+    def decorator(func: Callable) -> Callable:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
                 result = func(*args, **kwargs)
                 log_str = f'{func.__name__} ok'

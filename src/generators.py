@@ -1,5 +1,6 @@
 from typing import Iterable, Iterator
 
+
 def filter_by_currency(banking_information: Iterable[dict], currency_code: str) -> Iterator[dict]:
     """Функция которая принимает список словарей с банковскими операциями (или объект-генератор, который выдает
     по одной банковской операции) и возвращает итератор, который выдает по очереди операции,
