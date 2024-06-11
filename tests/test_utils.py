@@ -1,3 +1,5 @@
+from io import StringIO
+
 import pytest
 import unittest
 from unittest.mock import patch, mock_open, Mock, MagicMock
@@ -6,16 +8,13 @@ from src.external_api import currency_conversion
 import requests
 
 
-@patch('builtins.print')
 @patch('src.utils.currency_conversion')
-def test_transaction_amount_non_rub_transaction(mock_currency_conversion, mock_print):
-    transactions = [
-        {"operationAmount": {"amount": 100, "currency": {"code": "USD"}}}
-    ]
+def test_transaction_amount_non_rub_transaction(mock_currency_conversion):
+    transaction = {"operationAmount": {"amount": 100, "currency": {"code": "USD"}}}
     mock_currency_conversion.return_value = 7500.0
-    assert transaction_amount(transactions) is None
+    assert transaction_amount(transaction) == 7500.0
     mock_currency_conversion.assert_called_once_with("USD", 100)
-    mock_print.assert_called_once_with(7500.0)
+
 
 class TestDataTransactions(unittest.TestCase):
     def test_data_transactions(self):
@@ -63,21 +62,28 @@ class TestDataTransactions(unittest.TestCase):
             transactions = data_transactions('path/to/file.json')
 
             # проверяем результат
-            self.assertEqual(transactions, False)
+            self.assertEqual(transactions, [])
 
 
 class TestTransactionAmount(unittest.TestCase):
-    def test_empty_transactions(self):
-        #Проверьте, возвращает ли функция значение None, когда значение transactions пусто
-        transactions = []
-        with patch('builtins.print') as mock_print:
-            result = transaction_amount(transactions)
-            self.assertIsNone(result)
-            mock_print.assert_called_with("Транзакций не обнаружено.")
+    @patch('src.utils.currency_conversion')
+    def test_empty_transaction(self, mock_currency_conversion):
+        transaction = {}
+        result = transaction_amount(transaction)
+        self.assertEqual(result, 0.0)
+        mock_currency_conversion.assert_not_called()
+
 
     def test_rub_transactions(self):
         # Проверьте, чтобы функция выводила сумму для транзакций в рублях
-        transactions = [{"operationAmount": {"currency": {"code": "RUB"}, "amount": 100}}]
-        with patch('builtins.print') as mock_print:
-            transaction_amount(transactions)
-            mock_print.assert_called_with(100)
+        @patch('src.utils.currency_conversion.currency_conversion')
+        def test_rub_transaction(self, mock_currency_conversion):
+            transaction = {
+                "operationAmount": {
+                    "currency": {"code": "RUB"},
+                    "amount": 100.0
+                }
+            }
+            result = transaction_amount(transaction)
+            self.assertEqual(result, 100.0)
+            mock_currency_conversion.assert_not_called()
