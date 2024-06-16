@@ -1,7 +1,7 @@
 import unittest
 from turtle import pd
 from unittest.mock import mock_open, patch
-from src.new_transactions import read_xlsx_transactions
+from src.new_transactions import read_xlsx_transactions, read_csv_transactions
 
 
 class TestReadCsvTransactions(unittest.TestCase):
@@ -52,6 +52,7 @@ class TestReadCsvTransactions(unittest.TestCase):
             }
         ]
         self.assertEqual(result, expected_result)
+
 
 def test_read_xlsx_transactions():
     file_name = 'test.xlsx'
