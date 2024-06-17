@@ -1,11 +1,11 @@
 import logging
 import os.path
 
-logger = logging.getLogger('masks')
+logger = logging.getLogger("masks")
 file_handler = logging.FileHandler(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'masks.log'), mode='w'
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logs", "masks.log"), mode="w"
 )
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 logger.setLevel(logging.INFO)
@@ -32,14 +32,16 @@ def mask_card_account_number(card_account_number: list) -> str:
     return mask_number_account
 
 
-if __name__ == '__main__':
-    mask_card_account_number([
-        "1596837868705199",
-        "64686473678894779589",
-        "7158300734726758",
-        "35383033474447895560",
-        "6831982476737658",
-        "8990922113665229",
-        "5999414228426353",
-        "73654108430135874305",
-    ])
+if __name__ == "__main__":
+    mask_card_account_number(
+        [
+            "1596837868705199",
+            "64686473678894779589",
+            "7158300734726758",
+            "35383033474447895560",
+            "6831982476737658",
+            "8990922113665229",
+            "5999414228426353",
+            "73654108430135874305",
+        ]
+    )

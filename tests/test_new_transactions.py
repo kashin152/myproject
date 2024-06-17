@@ -1,5 +1,5 @@
 import unittest
-from turtle import pd
+import pandas as pd
 from unittest.mock import mock_open, patch
 from src.new_transactions import read_xlsx_transactions, read_csv_transactions
 
@@ -58,7 +58,7 @@ def test_read_xlsx_transactions():
     file_name = 'test.xlsx'
     data = {
         'id': [1, 2],
-        'tate': ['success', 'failed'],
+        'state': ['success', 'failed'],
         'date': ['2022-01-01', '2022-01-02'],
         'amount': [100, 200],
         'currency_name': ['USD', 'EUR'],

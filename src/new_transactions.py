@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def read_csv_transactions(file_name: str) -> list[dict]:
-    """Функция, которая считывает данные из файла CSV и преобразовывает в список словарей"""
+    # """Функция, которая считывает данные из файла CSV и преобразовывает в список словарей"""
     with open(file_name, "r", encoding="utf-8") as file:
         reader = csv.reader(file, delimiter=";")
         header = next(reader)
@@ -29,7 +29,7 @@ def read_csv_transactions(file_name: str) -> list[dict]:
 
 
 def read_xlsx_transactions(file_name: str) -> list[dict]:
-    """Функция, которая считывает данные из файла XLSX и преобразовывает в список словарей"""
+    # """Функция, которая считывает данные из файла XLSX и преобразовывает в список словарей"""
     df = pd.read_excel(file_name)
     result = df.apply(lambda row: {
         "id": row['id'],

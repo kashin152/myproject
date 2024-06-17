@@ -4,12 +4,15 @@ import os.path
 from typing import List
 
 from src.external_api import currency_conversion
+from src.new_transactions import read_csv_transactions
+from src.new_transactions import read_xlsx_transactions
 
-logger = logging.getLogger('utils')
+
+logger = logging.getLogger("utils")
 file_handler = logging.FileHandler(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'utils.log'), mode='w'
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logs", "utils.log"), mode="w"
 )
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 logger.setLevel(logging.INFO)
@@ -60,6 +63,12 @@ def transaction_amount(txn: dict) -> float:
     return 0.0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    for transaction in read_xlsx_transactions("../data/transactions_excel.xlsx"):
+        print(transaction_amount(transaction))
+
+    for transaction in read_csv_transactions("../data/transactions.csv"):
+        print(transaction_amount(transaction))
+
     for transaction in list_transactions:
         print(transaction_amount(transaction))
