@@ -1,7 +1,9 @@
 import unittest
-import pandas as pd
 from unittest.mock import mock_open, patch
-from src.new_transactions import read_xlsx_transactions, read_csv_transactions
+
+import pandas as pd
+
+from src.new_transactions import read_csv_transactions, read_xlsx_transactions
 
 
 class TestReadCsvTransactions(unittest.TestCase):
@@ -14,9 +16,9 @@ class TestReadCsvTransactions(unittest.TestCase):
         mock_file = mock_open(read_data=mock_file_content)
 
         # патчим функцию open, чтобы она возвращала наш mock-файл
-        with patch('builtins.open', mock_file):
+        with patch("builtins.open", mock_file):
             # вызываем функцию read_csv_transactions
-            result = read_csv_transactions('test.csv')
+            result = read_csv_transactions("test.csv")
 
         # проверяем результат
         expected_result = [
@@ -24,52 +26,40 @@ class TestReadCsvTransactions(unittest.TestCase):
                 "id": "1",
                 "state": "success",
                 "date": "2022-01-01",
-                "operationAmount": {
-                    "amount": "100.0",
-                    "currency": {
-                        "name": "USD",
-                        "code": "USD"
-                    }
-                },
+                "operationAmount": {"amount": "100.0", "currency": {"name": "USD", "code": "USD"}},
                 "description": "transfer",
                 "from": "account1",
-                "to": "account2"
+                "to": "account2",
             },
             {
                 "id": "2",
                 "state": "failed",
                 "date": "2022-01-02",
-                "operationAmount": {
-                    "amount": "200.0",
-                    "currency": {
-                        "name": "EUR",
-                        "code": "EUR"
-                    }
-                },
+                "operationAmount": {"amount": "200.0", "currency": {"name": "EUR", "code": "EUR"}},
                 "description": "payment",
                 "from": "account2",
-                "to": "account3"
-            }
+                "to": "account3",
+            },
         ]
         self.assertEqual(result, expected_result)
 
 
 def test_read_xlsx_transactions():
-    file_name = 'test.xlsx'
+    file_name = "test.xlsx"
     data = {
-        'id': [1, 2],
-        'state': ['success', 'failed'],
-        'date': ['2022-01-01', '2022-01-02'],
-        'amount': [100, 200],
-        'currency_name': ['USD', 'EUR'],
-        'currency_code': ['USD', 'EUR'],
-        'description': ['Test transaction', 'Another transaction'],
-        'from': ['Account 1', 'Account 2'],
-        'to': ['Account 2', 'Account 3']
+        "id": [1, 2],
+        "state": ["success", "failed"],
+        "date": ["2022-01-01", "2022-01-02"],
+        "amount": [100, 200],
+        "currency_name": ["USD", "EUR"],
+        "currency_code": ["USD", "EUR"],
+        "description": ["Test transaction", "Another transaction"],
+        "from": ["Account 1", "Account 2"],
+        "to": ["Account 2", "Account 3"],
     }
     df = pd.DataFrame(data)
 
-    with patch('pandas.read_excel') as mock_read_excel:
+    with patch("pandas.read_excel") as mock_read_excel:
         mock_read_excel.return_value = df
         result = read_xlsx_transactions(file_name)
         assert len(result) == 2
@@ -77,29 +67,17 @@ def test_read_xlsx_transactions():
             "id": 1,
             "state": "success",
             "date": "2022-01-01",
-            "operationAmount": {
-                "amount": 100,
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
+            "operationAmount": {"amount": 100, "currency": {"name": "USD", "code": "USD"}},
             "description": "Test transaction",
             "from": "Account 1",
-            "to": "Account 2"
+            "to": "Account 2",
         }
         assert result[1] == {
             "id": 2,
             "state": "failed",
             "date": "2022-01-02",
-            "operationAmount": {
-                "amount": 200,
-                "currency": {
-                    "name": "EUR",
-                    "code": "EUR"
-                }
-            },
+            "operationAmount": {"amount": 200, "currency": {"name": "EUR", "code": "EUR"}},
             "description": "Another transaction",
             "from": "Account 2",
-            "to": "Account 3"
+            "to": "Account 3",
         }
