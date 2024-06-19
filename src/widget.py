@@ -1,10 +1,13 @@
-def number_output(numbers: str) -> list:
+def number_output(numbers: str) -> str:
     """Функция, которая принимать на вход тип карты/счета и номер карты/счета и выводит только номер карты/счета"""
-    new_numbers = []
-    for number in numbers:
-        result = number.split()[-1]
-        new_numbers.append(result)
-    return new_numbers
+    if isinstance(numbers, str):
+        if numbers.split():
+            result = numbers.split()[-1]
+            return result
+        else:
+            return "0"
+    else:
+        return "0"
 
 
 def date_in_correct_format(dates: str) -> str:

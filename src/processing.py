@@ -9,8 +9,8 @@ def filter_by_state(input_list: list, state: str = "EXECUTED") -> list:
     return new_input_list
 
 
-def sort_by_date(input_list: list) -> list:
+def sort_by_date(input_list: list, sorting_order=False) -> list:
     """Функция которая принимает на вход список словарей и возвращает новый список, в котором исходные словари
     отсортированы по убыванию даты (ключ date). Функция принимает два аргумента, второй необязательный задает
      порядок сортировки (убывание, возрастание)."""
-    return sorted(input_list, key=lambda x: x["date"], reverse=True)
+    return sorted(input_list, key=lambda x: x["date"], reverse=sorting_order)

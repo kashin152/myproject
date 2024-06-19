@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import requests
 from dotenv import load_dotenv
+
 from src.external_api import currency_conversion
 
 load_dotenv(".env")
@@ -11,24 +12,26 @@ load_dotenv(".env")
 API_KEY = os.getenv("API_KEY")
 
 
-@patch('requests.get')
+@patch("requests.get")
 def test_currency_conversion(mock_get):
     mock_response = Mock()
-    mock_response.text = json.dumps({'result': 2})
+    mock_response.text = json.dumps({"result": 2})
     mock_get.return_value = mock_response
     assert currency_conversion("USD", 1) == 2
     mock_get.assert_called_once_with(
-        'https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=1', headers={"apikey": API_KEY})
+        "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=1", headers={"apikey": API_KEY}
+    )
 
 
-@patch('requests.get')
+@patch("requests.get")
 def test_currency_conversion_flout(mock_get):
     mock_response = Mock()
-    mock_response.text = json.dumps({'result': 3.5})
+    mock_response.text = json.dumps({"result": 3.5})
     mock_get.return_value = mock_response
     assert currency_conversion("USD", 1) == 3.5
     mock_get.assert_called_once_with(
-        'https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=1', headers={"apikey": API_KEY})
+        "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=1", headers={"apikey": API_KEY}
+    )
 
 
 @patch("requests.get")
