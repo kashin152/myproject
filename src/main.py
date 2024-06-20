@@ -53,8 +53,12 @@ def main() -> None:
             sorting_order = input(
                 """Отсортировать по возрастанию или по убыванию? по возрастанию/по убыванию\n"""
             ).lower()
-            filters.append(("date", sorting_order))
-            break
+            if sorting_order == "по возрастанию":
+                filters.append(("date", False))
+                break
+            else:
+                filters.append(("date", True))
+                break
         elif sort_date == "нет":
             break
         else:
@@ -94,7 +98,7 @@ def main() -> None:
             transactions = [txn for txn in transactions if txn["operationAmount"]["currency"]["code"] == filter_value]
         elif filter_type == "description":
             transactions = list_transactions_sort_search(transactions, filter_value)
-
+    print("Распечатываю итоговый список транзакций...")
     if not transactions:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     else:
