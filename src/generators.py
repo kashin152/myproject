@@ -6,6 +6,8 @@ def filter_by_currency(banking_information: Iterable[dict], currency_code: str) 
     по одной банковской операции) и возвращает итератор, который выдает по очереди операции,
      в которых указана заданная валюта."""
     for banking in banking_information:
+        if banking["operationAmount"]["currency"]["code"] in banking:
+            continue
         if banking["operationAmount"]["currency"]["code"] == currency_code:
             yield banking
 
